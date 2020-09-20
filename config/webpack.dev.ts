@@ -8,7 +8,7 @@ const devConfig: webpack.Configuration = merge(common, {
   mode: "development",
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html"
+      template: path.join(__dirname, "./index.html")
     })
   ],
   module: {
