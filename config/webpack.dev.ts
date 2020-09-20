@@ -3,12 +3,19 @@ import webpack from "webpack";
 import common from "./webpack.common";
 import merge from "webpack-merge";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 const devConfig: webpack.Configuration = merge(common, {
   mode: "development",
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "./index.html")
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+      eslint: {
+        files: "./src/**/*.{ts,tsx,js,jsx}"
+      }
     })
   ],
   module: {
