@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "esnext",
+        "sourceMap": true,
+        "outDir": "./build/",
+        "moduleResolution": "node",
+        "strict": true,
+        "lib": [
+            "dom",
+            "esnext",
+            "dom.iterable",
+            "scripthost"
+        ]
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "compileOnSave": true
+}
