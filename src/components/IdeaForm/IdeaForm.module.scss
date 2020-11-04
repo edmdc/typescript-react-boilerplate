@@ -1,0 +1,26 @@
+form {
+  display: flex;
+  flex-flow: column;
+  width: 100vw;
+  height: 35vh;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  width: 65vw;
+}
+
+.title {
+  height: 5em;
+}
+
+.content {
+  height: 13em;
+}
+
+.addIdea {
+  margin-top: 1em;
+  height: 8em;
+  width: 65vw;
+}
