@@ -24,13 +24,14 @@ const config = (env: unknown, argv: ConfigArgv): Configuration => {
   entry: {
     client: {
       import: "./src/index.tsx",
-      dependOn: "react-vendors",
+      dependOn: ["react-vendors", "styled-components"],
     },
     "react-vendors": ["react", "react-dom"],
+    "styled-components": "styled-components",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: productionMode ? "js/[name].[contentHash].bundle.js" : "js/[name].js",
+    filename: productionMode ? "js/[name].[contenthash].bundle.js" : "js/[name].js",
     publicPath: "/",
   },
   resolve: {
@@ -56,7 +57,10 @@ const config = (env: unknown, argv: ConfigArgv): Configuration => {
               "@babel/preset-react",
               "@babel/preset-typescript"
             ],
-            plugins: ["@babel/plugin-proposal-class-properties"]
+            plugins: [
+              "@babel/plugin-proposal-class-properties",
+              "babel-plugin-styled-components"
+            ]
           },
         },
       },

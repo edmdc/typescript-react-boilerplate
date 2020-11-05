@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import styles from './IdeaForm.module.scss';
 import {Idea} from '../App/App'
 
 type Props = {
@@ -36,7 +35,6 @@ export default function IdeaForm({ submitIdea }: Props ): JSX.Element {
         Title:
       </label>
       <input
-        className={styles.title}
         type='text'
         placeholder='Title'
         value={title}
@@ -49,7 +47,6 @@ export default function IdeaForm({ submitIdea }: Props ): JSX.Element {
         Content:
       </label>
       <input
-        className={styles.content}
         type='text'
         placeholder='Content'
         value={content}
@@ -58,7 +55,7 @@ export default function IdeaForm({ submitIdea }: Props ): JSX.Element {
           setContent(event.currentTarget.value)
         }}
       />
-      <button className={styles.addIdea}>
+      <button>
         Add Idea
       </button>
     </form>
