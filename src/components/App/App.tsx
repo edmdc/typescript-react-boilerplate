@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import styles from "./App.module.scss";
 import IdeaForm from "../IdeaForm/IdeaForm";
 
 export type Idea = {
@@ -35,7 +34,7 @@ class App extends Component {
   renderCards = (): JSX.Element[] => {
     return this.state.cards.map((card: Idea) => {
       return (
-        <article className={styles.card} key={card.id}>
+        <article key={card.id}>
           <h4>{card.title}</h4>
           <p>{card.content}</p>
         </article>
@@ -49,7 +48,7 @@ class App extends Component {
 
   render(): JSX.Element {
     return (
-      <section className={styles.main}>
+      <section>
         <h1>IdeaBox</h1>
         <IdeaForm submitIdea={this.submitNewIdea}/>
         {this.renderCards()}
