@@ -1,21 +1,24 @@
-import Dotenv from "dotenv";
 import path from "path";
 
 import { Configuration as WebpackConfiguration } from "webpack";
-import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
+import { Configuration as DevServerConfiguration } from "webpack-dev-server";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
-interface Configuration extends WebpackConfiguration {
-  devServer?: WebpackDevServerConfiguration;
+type ConfigArgv = {
+  color: boolean;
+  config: string;
+  mode: string;
 }
 
-Dotenv.config();
+interface Configuration extends WebpackConfiguration {
+  devServer?: DevServerConfiguration;
+}
 
-const productionMode = process.env.NODE_ENV === "production";
+const config = (env: unknown, argv: ConfigArgv): Configuration => {
+  const productionMode = argv.mode === "production";
 
-const config: Configuration = {
+  return ({
   mode: productionMode ? "production" : "development",
   devtool: productionMode ? false : "eval-source-map",
   entry: {
@@ -36,6 +39,7 @@ const config: Configuration = {
   devServer: {
     historyApiFallback: true,
     hot: true,
+    open: true,
     port: 8080,
     publicPath: "/",
   },
@@ -44,13 +48,16 @@ const config: Configuration = {
       {
         test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
-        use: "babel-loader",
-        options: {
-          presets: [
-            "@babel/preset-env",
-            "@babel/preset-react",
-            "@babel/preset-typescript"
-          ]
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              "@babel/preset-env",
+              "@babel/preset-react",
+              "@babel/preset-typescript"
+            ],
+            plugins: ["@babel/plugin-proposal-class-properties"]
+          },
         },
       },
       {
@@ -62,47 +69,29 @@ const config: Configuration = {
             outputPath: "imgs",
           },
         },
-      },{
-        test: /\.(scss|css)$/,
-        use: [
-          productionMode ? MiniCssExtractPlugin.loader : "style-loader",
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              sourceMap: true
-            }
-          }, {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-              implementation: require('node-sass')
-            }
-          }
-        ]
-      }
+      },
     ],
   },
   plugins: [
-    productionMode
+    !productionMode
       ? new ForkTsCheckerWebpackPlugin({
         async: false,
         eslint: {
           files: "./src/**/*.{ts,tsx,js,jsx}",
         },
       })
-      : () => null,
-     new HtmlWebpackPlugin({
-          filename: path.resolve(__dirname, "dist", "index.html"),
-          template: path.join(__dirname, "public", "index.html"),
-          minify: productionMode && {
-            removeAttributeQuotes: true,
-            collapseWhitespace: true,
-            removeComments: true
-          }
-      })
+        : () => null,
+      new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, "dist", "index.html"),
+      template: path.join(__dirname, "src", "index.html"),
+      minify: productionMode && {
+        removeAttributeQuotes: true,
+        collapseWhitespace: true,
+        removeComments: true
+      }
+    }),
   ],
+})
 };
 
 export default config

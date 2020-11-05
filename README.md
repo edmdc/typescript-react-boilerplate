@@ -87,7 +87,6 @@ target="_blank">TypeSearch</a>.
             "allowJs": true,
             "skipLibCheck": true,
             "esModuleInterop": true,
-            "strict": true,
             "forceConsistentCasingInFileNames": true,
             "moduleResolution": "node",
             "resolveJsonModule": true,
@@ -120,8 +119,8 @@ target="_blank">TypeSearch</a>.
           import React from 'react'
           ```
 
-      - `strict`: Stronger type guarantees. Not required.
       - `forceConsistentCasingInFileNames`: More helpful if working in bigger teams.
+      As the name suggest this will force consistent casing throughout project files.
 
       The following are helpful in configuring the project with TS and using Webpack
       to compile our code.
